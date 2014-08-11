@@ -129,7 +129,7 @@ class WPSiteSnippets
 						'add_new_item' => 'Add New Snippet Option',
 						'new_item_name' => 'New Snippet Option'
 				),
-				'show_ui' => true,
+				'show_ui' => false,
 				'show_tagcloud' => false,
 				'hierarchical' => true,
 				'show_admin_column' => false,
