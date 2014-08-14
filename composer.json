@@ -1,0 +1,6 @@
+{
+  "name": "link7/wp-site-snippets",
+  "type": "wordpress-plugin",
+  "description": "A Wordpress Plugin to insert snippets based on domain",
+  "license": "GPL-3.0+"
+}
