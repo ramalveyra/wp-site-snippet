@@ -40,9 +40,6 @@ class WPSiteSnippets
 		// check mapped domains
 		add_action('init', array($this,'wpss_get_mapped_domains'));
 
-		// remove default cat box
-		add_action('init',array($this,'wpss_remove_cat_box'));
-
 		// replace with a customised cat box
 		add_action( 'add_meta_boxes', array($this,'wpss_add_meta_box' ));
 		add_action( 'init', array( $this, 'wpss_register_taxonomy' ));
@@ -61,7 +58,7 @@ class WPSiteSnippets
 	}
 
 	private function setup_filters(){
-		add_filter('wp_list_categories', array($this,'wpss_customise_category_widget'));
+		//add_filter('wp_list_categories', array($this,'wpss_customise_category_widget'));
 	}
 
 	public function wpss_get_mapped_domains(){
@@ -206,10 +203,6 @@ class WPSiteSnippets
 			}
 
 		}
-	}
-
-	public function wpss_remove_cat_box(){
-		remove_meta_box(WPSS_TAXONOMY.'div', WPSS_POST_TYPE, 'side');
 	}
 
 	public function wpss_add_meta_box(){
