@@ -1,9 +1,10 @@
 <?php
 /*
-Plugin Name: WP Site Snippets
+Plugin Name: Link7 Site Snippets
 Plugin URI: https://github.com/Link7/wp-site-snippets
-Version: 0.1
+Version: 0.1.0
 Author: Link7
+Author URI: https://github.com/Link7
 Description: Wordpress plugin that create site snippets based on domain name
 Text Domain: wp-site-snippets
 License: GPLv3
