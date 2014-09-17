@@ -66,7 +66,21 @@ class WPSiteSnippets
 		// 1. check if WPMU domain mapping db is available
 		global $wpdb;
 		if(isset($wpdb->dmtable)){
-			if($wpdb->get_var("SHOW TABLES LIKE '$wpdb->dmtable'") == $wpdb->dmtable) {
+
+			// using transients
+			$query_str = "SHOW TABLES LIKE '$wpdb->dmtable'";
+			$query_hash = "WPSITESNIPPETDMTBL";
+
+			if ( strlen( $query_hash ) > 40 ) {
+				$query_hash = sha1( $query_str );
+			}
+
+			if ( false === ( $dmtable = get_site_transient( $query_hash ) ) ) {
+				$dmtable = $wpdb->get_var($query_str);
+				set_site_transient( $query_hash, $dmtable, HOUR_IN_SECONDS );
+			}
+
+			if($dmtable == $wpdb->dmtable) {
 				
 				// 2. table exists fetch the domains
     			$domains = $wpdb->get_results( "SELECT * FROM {$wpdb->dmtable} WHERE blog_id = '{$wpdb->blogid}'", ARRAY_A );
