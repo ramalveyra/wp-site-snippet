@@ -83,7 +83,7 @@ class WPSiteSnippets
 			if($dmtable == $wpdb->dmtable) {
 				
 				// 2. table exists fetch the domains
-    			$domains = $wpdb->get_results( "SELECT * FROM {$wpdb->dmtable} WHERE blog_id = '{$wpdb->blogid}'", ARRAY_A );
+    			$domains = $wpdb->get_results( "SELECT domain FROM {$wpdb->dmtable} WHERE blog_id = '{$wpdb->blogid}' GROUP BY domain", ARRAY_A );
     			if ( is_array( $domains ) && !empty( $domains ) ) {
     				$this->mapped_domains = $domains;
     			}
@@ -152,9 +152,11 @@ class WPSiteSnippets
 		// now create the taxonomies using the mapped domian
 		$mapped_domains = array();
 		$deleted_terms = array();
+
 		if($this->mapped_domains !== NULL){
 			// Add new domains
 			foreach ($this->mapped_domains as $details) {
+				
 				$mapped_domains[] = $details['domain'];
 				$term = term_exists($details['domain']);
 				
@@ -305,8 +307,8 @@ class WPSiteSnippets
     	." WHERE wp{$generic}term_taxonomy.taxonomy = '".WPSS_TAXONOMY."'"
     	." AND wp{$generic}terms.name = '{$position}'"
     	." AND wp{$generic}term_taxonomy.parent = ("
-        ." SELECT term_id FROM wp{$generic}terms WHERE name = '{$domain}'"
-    	.")"
+        ." SELECT term_id FROM wp{$generic}terms WHERE name = '{$domain}' LIMIT 1"
+    	.") LIMIT 1"
 		.")"
 		." AND post_type = 'wpss-code' AND (post_status = 'publish')";
 
